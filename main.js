@@ -1,9 +1,9 @@
-const costPerTb = 5.0;
-let pattern = /\d+(.\d+)?\s[a-zA-Z]+/g;
-let textField = document.querySelectorAll(
+var costPerTb = 5.0;
+var pattern = /\d+(.\d+)?\s[a-zA-Z]+/g;
+var textField = document.querySelectorAll(
   'query-validation-status div .cfc-truncated-text'
 );
-let usageStatementDiv;
+var usageStatementDiv;
 if (textField) {
   for (i = 0; i < textField.length; i++) {
     if (textField[i].innerText.includes('B when run')) {
@@ -12,11 +12,10 @@ if (textField) {
   }
 }
 
-let usageText = usageStatementDiv.innerText;
-let dataUsed = usageText.match(pattern);
-
-let dataValue = dataUsed[0].split(' ')[0];
-let denomination = dataUsed[0].split(' ')[1];
+var usageText = usageStatementDiv.innerText;
+var dataUsed = usageText.match(pattern);
+var dataValue = dataUsed[0].split(' ')[0];
+var denomination = dataUsed[0].split(' ')[1];
 
 switch (denomination) {
   case 'PiB':
@@ -37,10 +36,26 @@ switch (denomination) {
   default:
     break;
 }
-let costFloat = dataValue * costPerTb;
-let estimatedCost = +(Math.round(costFloat + 'e+2') + 'e-2');
+var costFloat = dataValue * costPerTb;
+var estimatedCost = +(Math.round(costFloat + 'e+2') + 'e-2');
+var style = '';
 
-let newDiv = document.createElement('div');
-newDiv.innerText = `This query will cost approx. $${estimatedCost}.`;
+if (estimatedCost > 15) {
+  style = 'color: red; font-weight: 500;';
+}
+if (estimatedCost > 5 && estimatedCost < 15) {
+  style = 'color: darkorange; font-weight: 500;';
+}
+if (estimatedCost < 5) {
+  style = 'color: green; font-weight: 500;';
+}
+
+var newDiv = document.createElement('div');
+newDiv.innerHTML =
+  '<span style="' +
+  style +
+  '">This query will cost approx. $' +
+  estimatedCost.toFixed(2) +
+  '.</span>';
 newDiv.className = 'costs';
 usageStatementDiv.appendChild(newDiv);
