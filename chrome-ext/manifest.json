@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "manifest_version": 3,
   "description": "Quickly estimate how much a query in BQ will cost.",
-  "default_locale": "en",
-  "icons": {},
-  "background": {
-    "service_worker": "background.js"
+  "icons": {
+    "16": "images/bq-cost_32.png",
+    "32": "images/bq-cost_32.png",
+    "64": "images/bq-cost_64.png",
+    "128": "images/bq-cost_128.png"
   },
   "permissions": [
     "activeTab"
